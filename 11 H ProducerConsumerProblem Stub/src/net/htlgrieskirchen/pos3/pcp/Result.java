@@ -7,10 +7,7 @@ package net.htlgrieskirchen.pos3.pcp;
 
 import java.util.List;
 
-/**
- *
- * @author rsickinger
- */
+
 public class Result {
     private List<Integer> received1;
     private List<Integer> received2;

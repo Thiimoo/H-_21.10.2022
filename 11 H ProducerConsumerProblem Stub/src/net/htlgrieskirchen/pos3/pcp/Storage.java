@@ -15,47 +15,60 @@ public class Storage {
     private int underflowCounter;
     private int overflowCounter;
     private boolean productionComplete;
-    
-    public Storage() {
-        // implement this
+
+    public Storage(int fetchedCounter, int storedCounter, int underflowCounter, int overflowCounter, boolean productionComplete) {
+        this.queue = new ArrayBlockingQueue<>(400);
+        this.fetchedCounter = fetchedCounter;
+        this.storedCounter = storedCounter;
+        this.underflowCounter = underflowCounter;
+        this.overflowCounter = overflowCounter;
+        this.productionComplete = productionComplete;
     }
-    
+
+    public Storage()
+    {
+        this.queue = new ArrayBlockingQueue<>(400);
+    }
+
     public synchronized boolean put(Integer data) throws InterruptedException {
-        // implement this
-        return false;
+
+        if (queue.offer(data))
+        {
+            storedCounter++;
+            return true;
+        }
+        else
+        {
+            overflowCounter++;
+            return true;
+        }
     }
  
     public synchronized Integer get() {
-        // implement this
-        return null;
+        return this.queue.element();
     }
 
     public boolean isProductionComplete() {
-        // implement this
-        return false;
+        return this.productionComplete;
     }
 
     public void setProductionComplete() {
-        // implement this
+        this.productionComplete = true;
     }
 
     public int getFetchedCounter() {
-        // implement this
-        return -1;
+        return this.fetchedCounter;
     }
 
     public int getStoredCounter() {
-        // implement this
-        return -1;
+        return this.storedCounter;
     }
 
     public int getUnderflowCounter() {
-        // implement this
-        return -1;
+        return this.underflowCounter;
     }
 
     public int getOverflowCounter() {
-        // implement this
-        return -1;
+        return this.overflowCounter;
     }
 }
