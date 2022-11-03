@@ -27,7 +27,24 @@ public class Consumer extends Thread {
     @Override
     public void run()
     {
-        //TODO implement run method
+        Integer temp;
+        while (!storage.isProductionComplete()|| !storage.getQueue().isEmpty())
+        {
+            synchronized (storage)
+            {
+                temp = storage.get();
+            }
+
+            if (temp!= null)
+            {
+                received.add(temp);
+            }
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public List<Integer> getReceived() {

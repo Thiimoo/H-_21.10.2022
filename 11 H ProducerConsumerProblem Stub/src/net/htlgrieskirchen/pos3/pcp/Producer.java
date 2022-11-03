@@ -27,7 +27,22 @@ public class Producer extends Thread {
     @Override
     public void run()
     {
-        //TODO: implement run method
+        for (int i = 0; i < numberOfItems; i++) {
+            try {
+                if (storage.put(i))
+                {
+                    sent.add(i);
+                }
+                else
+                {
+                    Thread.sleep(sleepTime);
+                    i--;
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        storage.setProductionComplete();
     }
 
     public List<Integer> getSent() {
